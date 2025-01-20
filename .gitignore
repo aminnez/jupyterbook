@@ -1,0 +1,10 @@
+# Intellij
+
+*.iml
+.idea
+.vscode
+*.bash_history
+.cache
+.local
+.npm
+workspaces

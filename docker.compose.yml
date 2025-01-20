@@ -1,0 +1,30 @@
+version: "3"
+services:
+  jupyterhub:
+    image: jupyterhub
+    build:
+      context: .
+    container_name: jupyterhub
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./jupyterhub_config.py:/srv/jupyterhub/jupyterhub_config.py
+    ports:
+      - "8000:8000"
+    networks:
+      - jupyterhub-network
+
+  nginx:
+    image: nginx
+    container_name: nginx-proxy
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./ssl:/etc/nginx/ssl
+    ports:
+      - "680:80"
+      - "6443:443"
+    networks:
+      - jupyterhub-network
+
+networks:
+  jupyterhub-network:
+    driver: bridge
