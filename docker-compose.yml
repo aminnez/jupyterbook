@@ -8,6 +8,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./jupyterhub_config.py:/srv/jupyterhub/jupyterhub_config.py
+      - ./data:/home
     ports:
       - "8000:8000"
     networks:
@@ -21,7 +22,7 @@ services:
       - ./ssl:/etc/nginx/ssl
     ports:
       - "680:80"
-      - "6443:443"
+      - "443:443"
     networks:
       - jupyterbook-network
 

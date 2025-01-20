@@ -5,7 +5,6 @@
 # - Java development environment
 # - Jupyter and JupyterLab
 # - IJava kernel for Java programming
-# - JupyterLite JavaScript kernel
 #
 # Build and run instructions:
 # 1. Build: docker build -t jupyterhub-dev .
@@ -48,7 +47,3 @@ RUN curl -L https://github.com/SpencerPark/IJava/releases/download/v1.3.0/ijava-
     # Clean up downloaded files
     && cd .. \
     && rm -rf ijava-kernel ijava-kernel.zip
-
-# Install JupyterLite JavaScript Kernel
-# Enables JavaScript code execution directly in the notebook environment
-RUN pip3 install jupyterlite-javascript-kernel

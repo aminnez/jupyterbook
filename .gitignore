@@ -8,3 +8,4 @@
 .local
 .npm
 workspaces
+data/*
