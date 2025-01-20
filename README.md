@@ -7,6 +7,7 @@ A comprehensive [Jupyter](https://jupyter.org/) notebook environment with suppor
 - [JupyterHub](https://github.com/jupyterhub/jupyterhub) as the core platform for multi-user support.
 - [Jupyter](https://jupyter.org/) and [JupyterLab](https://jupyterlab.readthedocs.io/en/stable/) as the primary interfaces.
 - Java programming via the [IJava](https://github.com/SpencerPark/IJava) kernel.
+- User authentication via [Google OAuth](https://developers.google.com/identity/protocols/oauth2).
 
 ## Prerequisites
 
@@ -54,33 +55,35 @@ docker compose ps
 ### 4. Access JupyterBook
 
 - **URL:** `https://example.com`
-- **Default Login:** Follow the authentication setup instructions in the documentation.
 - **Supported Languages:**
   - Python (default)
   - Java (via IJava kernel)
 
 ## Configuration
 
-### User Authentication
+### Google OAuth Configuration
 
-1. **Create Users:** Add users to the `allowed_users` list in the `jupyterhub_config.py` file.
-2. **Admin Users:** Add admin users to the `admin_users` list.
+1. **Create Google OAuth Credentials:**
+   - Go to the [Google Cloud Console](https://console.cloud.google.com/)
+   - Create a new project or select an existing project
+   - Navigate to `APIs & Services` > `Credentials`
+   - Click `Create Credentials` > `OAuth client ID`
+   - Choose `Web application` as the application type
+   - Add your domain (e.g., `https://example.com`) to the Authorized JavaScript origins
+   - Add `https://example.com/hub/oauth_callback` to the Authorized redirect URIs
+   - Save the client ID and client secret
 
-#### Setting Passwords
-
-This project uses local authentication, requiring a password for each user. Set the password inside the container:
-
-1. Run the container in interactive mode:
-
-   ```bash
-   docker exec -it jupyterbook-hub bash
-   ```
-
-2. Set the password for a user:
+2. **Set Environment Variables:**
+   Create a `.env` file in the project root with your Google OAuth credentials:
 
    ```bash
-   passwd amin
+   GOOGLE_OAUTH_CLIENT_ID=your_client_id
+   GOOGLE_OAUTH_CLIENT_SECRET=your_client_secret
+   OAUTH_CALLBACK_URL=https://example.com/hub/oauth_callback
    ```
+
+3. **User Restrictions:**
+   - Uncomment and modify the `admin_users` and `allowed_users` lines in `jupyterhub_config.py` to restrict access to specific users.
 
 ### Port Configuration
 
@@ -98,7 +101,6 @@ To change the port, update the `docker-compose.yml` file as necessary.
 
 ## Troubleshooting
 
-- **Connection Issues:** Ensure port `8000` is not blocked by other services.
 - **Permission Errors:** Run with `sudo` if encountering permission problems.
 - **Container Logs:**
 

@@ -35,6 +35,10 @@ RUN pip3 install --no-cache-dir \
     jupyter \
     jupyterlab
 
+# Install JupyterHub and OAuthenticator
+RUN pip3 install \
+    dockerspawner \
+    oauthenticator
 # Install IJava Kernel for Java programming in Jupyter notebooks
 # Process:
 # 1. Download IJava kernel release
