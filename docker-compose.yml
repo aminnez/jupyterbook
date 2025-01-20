@@ -1,17 +1,17 @@
 version: "3"
 services:
-  jupyterhub:
-    image: jupyterhub
+  jupyterbook:
+    image: jupyterbook
     build:
       context: .
-    container_name: jupyterhub
+    container_name: jupyterbook
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./jupyterhub_config.py:/srv/jupyterhub/jupyterhub_config.py
     ports:
       - "8000:8000"
     networks:
-      - jupyterhub-network
+      - jupyterbook-network
 
   nginx:
     image: nginx
@@ -23,8 +23,8 @@ services:
       - "680:80"
       - "6443:443"
     networks:
-      - jupyterhub-network
+      - jupyterbook-network
 
 networks:
-  jupyterhub-network:
+  jupyterbook-network:
     driver: bridge
