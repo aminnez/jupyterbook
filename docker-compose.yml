@@ -1,10 +1,10 @@
 version: "3"
 services:
-  jupyterbook:
-    image: jupyterbook
+  jupyterbook-hub:
+    image: jupyterbook-hub
     build:
       context: .
-    container_name: jupyterbook
+    container_name: jupyterbook-hub
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./jupyterhub_config.py:/srv/jupyterhub/jupyterhub_config.py
@@ -13,9 +13,9 @@ services:
     networks:
       - jupyterbook-network
 
-  nginx:
+  jupyterbook-nginx:
     image: nginx
-    container_name: nginx-proxy
+    container_name: jupyterbook-nginx-proxy
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./ssl:/etc/nginx/ssl
