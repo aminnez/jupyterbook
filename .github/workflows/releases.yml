@@ -79,7 +79,7 @@ jobs:
           - **Docker Hub:** \`${{ matrix.username }}/${{ matrix.target }}:${{ github.ref_name }}\`
 
           ### Changelog
-          $(git log --pretty=format:"- %s" $(git describe --tags --abbrev=0)^..HEAD)
+          $(git log --pretty=format:"- %s" $(git describe --tags --abbrev=0)^..HEAD | grep -v "chore:")
           EOF
           )
           echo "release_notes<<EOF" >> $GITHUB_OUTPUT
