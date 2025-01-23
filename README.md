@@ -1,5 +1,11 @@
 # JupyterHub+JupyterLab+Java+Dart+Typescript
 
+![Docker Image Version](https://img.shields.io/docker/v/aminnez/jupyterbook-hub?label=Docker%20Image%20Version)
+![GitHub Container Registry Version](https://img.shields.io/github/v/release/aminnez/jupyterbook?label=GHCR%20Image%20Version)
+![Container Registry Size](https://img.shields.io/github/v/release/aminnez/jupyterbook?label=Image%20Size)
+![GitHub Container Registry Last Version](https://img.shields.io/github/v/tag/aminnez/jupyterbook?label=Last%20Version)
+![License](https://img.shields.io/github/license/aminnez/jupyterbook?label=License)
+
 ## Overview
 
 A comprehensive [Jupyter](https://jupyter.org/) notebook environment with multi-language support including Java, Python, Dart, JavaScript/Typescript, and Zsh featuring [JupyterHub](https://github.com/jupyterhub/jupyterhub) for user authentication.

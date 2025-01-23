@@ -1,7 +1,7 @@
 version: "3"
 services:
   jupyterbook-hub:
-    image: jupyterbook-hub
+    image: ghcr.io/aminnez/jupyterbook:latest
     build:
       context: .
     container_name: jupyterbook-hub
