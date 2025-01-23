@@ -60,3 +60,37 @@ jobs:
 
       - name: Log out of GitHub Container Registry
         run: docker logout
+
+  create_release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: push_to_registries # Ensure this runs after the Docker push job
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Generate release notes
+        id: generate_release_notes
+        run: |
+          GHCR_IMAGE_TAG="ghcr.io/${{ matrix.username }}/${{ matrix.target }}:${{ github.ref_name }}"
+          RELEASE_NOTES=$(cat <<EOF
+          ### Docker Images
+          - **GitHub Container Registry (GHCR):** \`$GHCR_IMAGE_TAG\`
+          - **Docker Hub:** \`${{ matrix.username }}/${{ matrix.target }}:${{ github.ref_name }}\`
+
+          ### Changelog
+          $(git log --pretty=format:"- %s" $(git describe --tags --abbrev=0)^..HEAD)
+          EOF
+          )
+          echo "release_notes<<EOF" >> $GITHUB_OUTPUT
+          echo "$RELEASE_NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.ref_name }} # Use the tag that triggered the workflow
+          release_name: Release ${{ github.ref_name }}
+          body: ${{ steps.generate_release_notes.outputs.release_notes }} # Use custom release notes
+          draft: false
+          prerelease: false
