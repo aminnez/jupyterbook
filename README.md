@@ -1,13 +1,15 @@
-# JupyterHub+JupyterLab+IJava
+# JupyterHub+JupyterLab+Java+Dart+Typescript
 
 ## Overview
 
-A comprehensive [Jupyter](https://jupyter.org/) notebook environment with support for both Java and Python, featuring [JupyterHub](https://github.com/jupyterhub/jupyterhub) for user authentication.
+A comprehensive [Jupyter](https://jupyter.org/) notebook environment with multi-language support including Java, Python, Dart, JavaScript/Typescript, and Zsh featuring [JupyterHub](https://github.com/jupyterhub/jupyterhub) for user authentication.
 
 - [JupyterHub](https://github.com/jupyterhub/jupyterhub) as the core platform for multi-user support.
 - [Jupyter](https://jupyter.org/) and [JupyterLab](https://jupyterlab.readthedocs.io/en/stable/) as the primary interfaces.
 - Java programming via the [IJava](https://github.com/SpencerPark/IJava) kernel.
-- User authentication via [Google OAuth](https://developers.google.com/identity/protocols/oauth2).
+- Dart programming via the [Dart Kernel](https://github.com/vickumar1981/jupyter-dart-kernel.git) kernel.
+- JavaScript/Typescript programming via the [tslab](https://github.com/yunabe/tslab) kernel.
+- Zsh with [Oh My Zsh](https://ohmyz.sh/) as the default shell.
 
 ## Prerequisites
 
@@ -42,6 +44,18 @@ cd jupyterbook
 - **Replace** `example.com` with your desired domain in `nginx.conf`.
 - **Generate SSL** certificates for the Nginx reverse proxy and place `fullchain.pem` and `privkey.pem` in the `ssl` directory.
 
+```bash
+openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 \
+   -keyout ./ssl/privkey.pem \
+   -out ./ssl/fullchain.pem
+
+#OR
+
+acme.sh --install-cert -d example.com \
+   --key-file       ./ssl/privkey.pem  \
+   --fullchain-file ./ssl/fullchain.pem
+```
+
 ### 3. Build and Start the Environment
 
 ```bash
@@ -54,10 +68,13 @@ docker compose ps
 
 ### 4. Access JupyterBook
 
-- **URL:** `https://example.com`
+- **URL:** `http://localhost:8000` (or `https://example.com` if using hosted one)
 - **Supported Languages:**
   - Python (default)
   - Java (via IJava kernel)
+  - Dart (via Dart Kernel)
+  - JavaScript/Typescript (via tslab kernel)
+  - Zsh (default shell)
 
 ## Configuration
 

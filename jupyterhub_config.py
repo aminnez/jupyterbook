@@ -9,12 +9,10 @@ c.JupyterHub.db_url = pjoin(runtime_dir, 'jupyterhub.sqlite')
 
 c.JupyterHub.authenticator_class = LocalGoogleOAuthenticator
 
-# Google OAuth configuration
 c.LocalGoogleOAuthenticator.oauth_callback_url = os.environ.get('OAUTH_CALLBACK_URL', 'http://localhost.com/hub/oauth_callback')
 c.LocalGoogleOAuthenticator.client_id = os.environ.get('GOOGLE_OAUTH_CLIENT_ID', '')
 c.LocalGoogleOAuthenticator.client_secret = os.environ.get('GOOGLE_OAUTH_CLIENT_SECRET', '')
 
-# c.LocalGoogleOAuthenticator.hosted_domain = ['example.com']
 # c.LocalGoogleOAuthenticator.allow_all = True
 c.LocalGoogleOAuthenticator.allowed_users = {'aminnezam@gmail.com'}
 c.LocalGoogleOAuthenticator.admin_users = {'aminnezam@gmail.com'}
@@ -27,3 +25,4 @@ c.DockerSpawner.image = 'jupyterbook-hub'
 c.DockerSpawner.network_name = 'jupyterhub-network'
 c.JupyterHub.bind_url = 'http://0.0.0.0:8000'
 c.Spawner.default_url = '/lab'
+c.Spawner.args = ['--ServerApp.terminado_settings={ "shell_command": ["/usr/bin/zsh"] }', '--NotebookApp.kernel_manager_class=notebook.services.kernels.kernelmanager.AsyncMappingKernelManager']
